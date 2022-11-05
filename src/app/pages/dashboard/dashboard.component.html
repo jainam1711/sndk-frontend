@@ -1,0 +1,85 @@
+<li class="nav-item">
+  <a href="javascript:void(0)" class="nav-link" style="float: right;" (click)="logout()">
+    Logout
+  </a>
+</li>
+
+<div class="row m-0 mt-3 pt-3 ml-2" style="color: black">
+  <div class="col-md-3">
+    <div class="card-group">
+      <div class="card mb-4">
+        <div class="card-body bg-info">
+          <h6 class="card-title">Pending Task:</h6>
+          <p class="card-text blue-text">
+            <img src="assets/pending.svg" class="mb-3">
+            <span class="ml-3" style="font-size: 30px;">{{pending?.length}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card-group">
+      <div class="card mb-4">
+        <div class="card-body bg-success">
+          <h6 class="card-title">Completed Task:</h6>
+          <p class="card-text green-text">
+            <img src="assets/completed.svg" class="mb-3">
+            <span class="ml-3" style="font-size: 30px;">{{completed?.length}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form class="form-inline mt-5 mb-5 custom-form" (ngSubmit)="addTask()">
+  <input class="form-control mr-sm-2" type="search" placeholder="Add Task" [(ngModel)]="task"
+    [ngModelOptions]="{standalone: true}">
+  <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" [disabled]="!task">Search</button>
+</form>
+
+<div class="row m-0">
+  <div class="col-sm-2"></div>
+
+  <div class="col-sm-3">
+    <div class="card card-outline-success mb-3" droppable [dragOverClass]="'drag-target-border'"
+      [dropScope]="['completed']" [dragHintClass]="'drag-hint'" (onDrop)="pendingDrop($event)">
+      <div class="card-header card-inverse card-success">Pending</div>
+      <div class="card-block scroll-list">
+        <div class="list-group">
+          <li class="list-group-item list-group-item-action list-group-item-primary" [draggable]
+            *ngFor="let item of pending" [dragClass]="'active'" [dragTransitClass]="'active'" [dragData]="item"
+            [dragScope]="item.type" [dragEnabled]="true">
+            {{item.name}}
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="card card-outline-primary mb-3" droppable [dragOverClass]="'drag-target-border-green'"
+      [dropScope]="['pending']" [dragHintClass]="'drag-hint'" (onDrop)="completedDrop($event)">
+      <div class="card-header card-inverse card-primary">Completed</div>
+      <div class="card-block scroll-list">
+        <li class="list-group-item list-group-item-action list-group-item-success" [draggable]
+          *ngFor="let item of completed" [dragClass]="'active'" [dragTransitClass]="'active'" [dragData]="item"
+          [dragScope]="item.type" [dragEnabled]="true">
+          {{item.name}}
+        </li>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-2">
+    <div class="card card-inverse bg-danger text-center" droppable [dragHintClass]="'drag-hint-scale'"
+      [dragOverClass]="'drag-over'" [dropScope]="['pending', 'completed']" (onDrop)="onDeleteDrop($event)">
+      <div class="card-block">
+        <h4 class="card-title m-3"><img src="assets/trash.svg"> Drop to Delete</h4>
+      </div>
+    </div>
+  </div>
+
+</div>

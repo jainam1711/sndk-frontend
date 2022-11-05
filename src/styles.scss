@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/ngx-toastr/toastr.css';
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// @import '../node_modules/ngx-spinner/animations/ball-scale-multiple.css';
+
+.form-text.text-muted.danger {
+    color: red !important;
+    font-size: 14px;
+    margin-top: 7px
+}
+
+.form-control.ng-invalid.ng-dirty.ng-touched {
+    border-color: red;
+}
+
+
+body {
+    font-family: Lato;
+    background: lightgray;
+    color: #ddd;
+}
